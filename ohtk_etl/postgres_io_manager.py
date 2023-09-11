@@ -69,7 +69,7 @@ class PostgreSQLPandasIOManager(ConfigurableIOManager):
                     con=con,
                     name=table,
                     schema=schema,
-                    if_exists="replace",
+                    if_exists="append",
                     chunksize=500,
                 )
         else:
