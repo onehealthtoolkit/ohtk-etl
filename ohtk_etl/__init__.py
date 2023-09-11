@@ -20,7 +20,7 @@ source_db = OhtkDatabaseResource(
     db_host=os.getenv("SRC_DB_HOST") or "localhost",
     db_port=os.getenv("SRC_DB_PORT") or "5432",
     db_name=os.getenv("SRC_DB_NAME") or "ohtk",
-    db_schema=os.getenv("SRC_DB_SCHEMA") or "bon",
+    db_schema=os.getenv("SRC_DB_SCHEMA") or "bon,public",
 )
 
 report_job = define_asset_job("report_job", AssetSelection.groups("report_group"))
