@@ -136,7 +136,7 @@ def incident_reports(
             /* latitude and longitude */
             st_x(gps_location::geometry) as longitude,
             st_y(gps_location::geometry) as latitude,
-            r.data::varchar as data
+            r.data::JSONB as data
         from reports_incidentreport r,
             reports_reporttype rt,
             reports_category rc,

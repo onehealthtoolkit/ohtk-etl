@@ -16,6 +16,7 @@ from contextlib import contextmanager
 import pandas
 from sqlalchemy import create_engine
 from sqlalchemy.engine import URL, Connection
+from sqlalchemy.dialects.postgresql import JSONB
 from typing import Iterator, Optional, Sequence
 
 from dagster import (
@@ -71,6 +72,7 @@ class PostgreSQLPandasIOManager(ConfigurableIOManager):
                     schema=schema,
                     if_exists="append",
                     chunksize=500,
+                    dtype={"data": JSONB()},
                 )
         else:
             raise Exception(f"Outputs of type {type(obj)} not supported.")
