@@ -1,11 +1,13 @@
 import os
 
 from dagster import (
-    Definitions,
-    load_assets_from_modules,
     AssetSelection,
-    define_asset_job,
+    Definitions,
+    MonthlyPartitionsDefinition,
+    PartitionedConfig,
     ScheduleDefinition,
+    define_asset_job,
+    load_assets_from_modules,
 )
 
 from . import assets
@@ -23,7 +25,14 @@ source_db = OhtkDatabaseResource(
     db_schema=os.getenv("SRC_DB_SCHEMA") or "bon,public",
 )
 
-report_job = define_asset_job("report_job", AssetSelection.groups("report_group"))
+partitions_def = (
+    MonthlyPartitionsDefinition(start_date="2023-01-01", timezone="Asia/Bangkok"),
+)
+report_job = define_asset_job(
+    "report_job",
+    AssetSelection.groups("report_group"),
+    config=PartitionedConfig(partitions_def),
+)
 report_schedule = ScheduleDefinition(job=report_job, cron_schedule="0 0 * * *")
 
 
